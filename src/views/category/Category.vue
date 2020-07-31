@@ -13,6 +13,7 @@
           <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
         </div>
       </scroll>
+      
     </div>
   </div>
 </template>

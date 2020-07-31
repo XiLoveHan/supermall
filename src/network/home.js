@@ -12,7 +12,7 @@ export function getHomeMultidata() {
 export function getHomeData(type, page) {
   return axios({
     url: '/home/data',
-    params: {
+    params: {//get提交方式
       type,
       page
     }

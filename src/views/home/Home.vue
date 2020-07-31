@@ -1,8 +1,10 @@
 <template>
   <div id="home">
-    <nav-bar class="nav-bar"><div slot="center">购物街</div></nav-bar>
+    <nav-bar class="nav-bar"><div slot="center">购物街</div></nav-bar><!-- 页面开始标题 -->
+
     <tab-control v-show="isTabFixed" class="fixed" @itemClick="tabClick"
                  :titles="['流行', '新款', '精选']"></tab-control>
+
     <scroll class="content"
             ref="scroll"
             @scroll="contentScroll"
@@ -13,20 +15,22 @@
       <div>
         <home-swiper :banners="banners" ref="hSwiper"></home-swiper><!-- 轮播图 -->
 
-        <feature-view :features="recommends"></feature-view>
+        <feature-view :features="recommends"></feature-view><!-- 推荐 -->
 
-        <recommend-view></recommend-view>
+        <recommend-view></recommend-view> <!-- 特性特点 -->
 
         <tab-control @itemClick="tabClick"
                      :titles="['流行', '新款', '精选']"
                      ref="tabControl"></tab-control>
-                     
+
         <goods-list :goods-list="showGoodsList"></goods-list>
       </div>
     </scroll>
+      <!-- v-show="showBackTop"=>当showBackTop=true是显示，false时隐藏 -->
     <back-top @backTop="backTop" class="back-top" v-show="showBackTop">
       <img src="~assets/img/common/top.png" alt="">
     </back-top>
+
   </div>
 </template>
 
@@ -35,6 +39,7 @@
   import Scroll from 'components/common/scroll/Scroll'
   import TabControl from 'components/content/tabControl/TabControl'
   import BackTop from 'components/content/backTop/BackTop'
+
   import HomeSwiper from './childComps/HomeSwiper'
   import FeatureView from './childComps/FeatureView'
   import RecommendView from './childComps/RecommendView'
@@ -68,7 +73,8 @@
         currentType: POP,
         isTabFixed: false,
         tabOffsetTop: 0,
-        showBackTop: false
+        // showBackTop: false
+        showBackTop: true
       }
     },
     computed: {
@@ -114,13 +120,14 @@
 		    // 1.决定tabFixed是否显示
         this.isTabFixed = position.y < -this.tabOffsetTop
 
-        // 2.决定backTop是否显示
+        // 2.决定backTop是否显示（决定置顶图标是否显示）
         this.showBackTop = position.y < -BACKTOP_DISTANCE
       },
-      loadMore() {
+      loadMore() {//上拉加载更多
 		    this.getHomeProducts(this.currentType)
       },
       backTop() {
+        console.log('backTop')
         this.$refs.scroll.scrollTo(0, 0, 300)
       },
       /**
@@ -165,16 +172,24 @@
   .content {
     position: absolute;
     top: 44px;
+    /* padding-top:44px; */
     bottom: 49px;
     left: 0;
     right: 0;
   }
 
   .fixed {
+    /*
+    解决：当该标题栏上升到页面顶端是静止不动
+    position:sticky;
+    top:44px;
+    background-color:#fff;
+     */
     position: fixed;
     top: 44px;
     left: 0;
     right: 0;
+    
   }
 
   .back-top {

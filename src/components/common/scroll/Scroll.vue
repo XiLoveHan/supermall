@@ -1,6 +1,18 @@
 <template>
   <div ref="wrapper">
     <slot></slot>
+    <ul>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+      <li>分类1</li>
+    </ul>
   </div>
 </template>
 
@@ -10,7 +22,7 @@
 	export default {
 		name: "Scroll",
     props: {
-		  probeType: {
+		  probeType: {//监听滚动位置
 		    type: Number,
         default: 1
       },
@@ -38,12 +50,12 @@
 		    // 1.初始化BScroll对象
 		    if (!this.$refs.wrapper) return
         this.scroll = new BScroll(this.$refs.wrapper, {
-          probeType: this.probeType,
+          probeType: this.probeType,//监听滚动位置
           click: true,
-          pullUpLoad: this.pullUpLoad
+          pullUpLoad: this.pullUpLoad//上拉加载更多
         })
 
-        // 2.将监听事件回调
+        // 2.将监听事件回调（监听滚动的位置）
         this.scroll.on('scroll', pos => {
           this.$emit('scroll', pos)
         })
@@ -60,7 +72,7 @@
       finishPullUp() {
 		    this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
       },
-      scrollTo(x, y, time) {
+      scrollTo(x, y, time) {//页面置顶
 		    this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
       }
     },
